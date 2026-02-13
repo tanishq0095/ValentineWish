@@ -5,16 +5,23 @@ html {
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
+  background-color: #fff; /* Ensures a clean background */
 }
 
+/* 1. Essential: Hide the container and set its width properly */
 .container {
   height: 100vh;
-  width: 100vh;
+  width: 100vw; /* Use vw for full screen width */
   margin: 0 auto;
   text-align: center;
   visibility: hidden;
   position: relative;
   overflow: hidden;
+}
+
+/* 2. Hide all story segments initially so GSAP can fade them in */
+.one, .two, .three, .four, .five, .six, .nine, .baloons {
+  opacity: 0;
 }
 
 .container div.six {
@@ -85,11 +92,13 @@ body {
   border-radius: 3px;
 }
 
+/* 3. Prevent individual 'idea' lines from overlapping */
 .five p {
   font-size: 2rem;
   position: absolute;
   left: 0;
   right: 0;
+  opacity: 0; /* Keep hidden for GSAP sequence */
 }
 
 .idea-3 strong {
@@ -110,6 +119,7 @@ body {
 
 .idea-6 span {
   font-size: 15rem;
+  opacity: 0;
 }
 
 .six {
@@ -120,6 +130,7 @@ body {
   display: inline-block;
   max-width: 45%;
   height: auto;
+  border-radius: 10px; /* Optional: adds a nice look to the photo */
 }
 
 .six .hat {
@@ -127,7 +138,6 @@ body {
   width: 80px;
   top: -35px;
   left: 41.5%;
-  /* transform: scale(0.1); */
 }
 
 .baloons img {
@@ -157,70 +167,29 @@ body {
   z-index: -1;
 }
 
-.eight svg:nth-child(1) {
-  top: 7vh;
-  left: 5vw;
-  fill: #bd6ecf;
-}
-
-.eight svg:nth-child(2) {
-  top: 23vh;
-  left: 35vw;
-  fill: #7dd175;
-}
-
-.eight svg:nth-child(3) {
-  top: 33vh;
-  left: 23vw;
-  fill: #349d8b;
-}
-
-.eight svg:nth-child(4) {
-  top: 43vh;
-  left: 57vw;
-  fill: #347a9d;
-}
-
-.eight svg:nth-child(5) {
-  top: 68vh;
-  left: 7vw;
-  fill: #c66053;
-}
-
-.eight svg:nth-child(6) {
-  top: 42vh;
-  left: 77vw;
-  fill: #bfaa40;
-}
-
-.eight svg:nth-child(7) {
-  top: 68vh;
-  left: 83vw;
-  fill: #e3bae8;
-}
-
-.eight svg:nth-child(8) {
-  top: 86vh;
-  left: 37vw;
-  fill: #8762cb;
-}
-
-.eight svg:nth-child(9) {
-  top: 94vh;
-  left: 87vw;
-  fill: #9a90da;
-}
+/* SVG Colors & Positions */
+.eight svg:nth-child(1) { top: 7vh; left: 5vw; fill: #bd6ecf; }
+.eight svg:nth-child(2) { top: 23vh; left: 35vw; fill: #7dd175; }
+.eight svg:nth-child(3) { top: 33vh; left: 23vw; fill: #349d8b; }
+.eight svg:nth-child(4) { top: 43vh; left: 57vw; fill: #347a9d; }
+.eight svg:nth-child(5) { top: 68vh; left: 7vw; fill: #c66053; }
+.eight svg:nth-child(6) { top: 42vh; left: 77vw; fill: #bfaa40; }
+.eight svg:nth-child(7) { top: 68vh; left: 83vw; fill: #e3bae8; }
+.eight svg:nth-child(8) { top: 86vh; left: 37vw; fill: #8762cb; }
+.eight svg:nth-child(9) { top: 94vh; left: 87vw; fill: #9a90da; }
 
 .wish-hbd {
   font-size: 3em;
   margin: 0;
-  /* text-transform: uppercase; */
 }
 
-.wish h5 {
+/* 4. Fix for the \n newlines in your JSON */
+#wishText {
   font-weight: lighter;
   font-size: 2rem;
   margin: 10px 0 0;
+  white-space: pre-line; /* Essential for your message formatting */
+  display: block;
 }
 
 .nine p {
@@ -233,68 +202,20 @@ body {
   cursor: pointer;
 }
 
-/* Media Queries */
-@media screen and (max-height: 1000px) {
-  .six .hat {
-    left: 40%;
-  }
-}
-
-@media screen and (max-height: 800px) {
-  .six .hat {
-    left: 37%;
-  }
-}
-
-@media screen and (max-height: 700px) {
-  .six .hat {
-    left: 32%;
-  }
-}
-
-@media screen and (max-height: 850px) and (max-width: 450px) {
-  .six .hat {
-    left: 32%;
-  }
-}
+/* Media Queries for Responsive Hat & Text */
+@media screen and (max-height: 1000px) { .six .hat { left: 40%; } }
+@media screen and (max-height: 800px) { .six .hat { left: 37%; } }
+@media screen and (max-height: 700px) { .six .hat { left: 32%; } }
+@media screen and (max-height: 850px) and (max-width: 450px) { .six .hat { left: 32%; } }
 
 @media screen and (max-width: 500px) {
-  .container {
-    width: 90%;
-  }
-
-  .four .text-box {
-    width: 90%;
-  }
-
-  .text-box .fake-btn {
-    right: 5px;
-    bottom: -38px;
-  }
-
-  .idea-5 span {
-    display: block;
-  }
-
-  .idea-6 span {
-    font-size: 10rem;
-  }
-
-  .six .hat {
-    width: 50px;
-    top: -20px;
-  }
-
-  .wish-hbd {
-    font-size: 2.3em;
-  }
-
-  .wish h5 {
-    font-size: 1.4rem;
-  }
-
-  .nine p {
-    font-size: 1.5rem;
-    font-weight: lighter;
-  }
+  .container { width: 95%; }
+  .four .text-box { width: 90%; }
+  .text-box .fake-btn { right: 5px; bottom: -38px; }
+  .idea-5 span { display: block; }
+  .idea-6 span { font-size: 10rem; }
+  .six .hat { width: 50px; top: -20px; }
+  .wish-hbd { font-size: 2.3em; }
+  .wish h5 { font-size: 1.4rem; }
+  .nine p { font-size: 1.5rem; }
 }
