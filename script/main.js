@@ -276,11 +276,12 @@ const animationTimeline = () => {
 };
 
 // Import the data to customize and insert them into page
+// Import the data to customize and insert them into page
 const fetchData = () => {
-  fetch("customize.json")
-    .then((data) => data.json())
+  return fetch("customize.json")
+    .then((response) => response.json())
     .then((data) => {
-      Object.keys(data).map((customData) => {
+      Object.keys(data).forEach((customData) => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
             document
@@ -294,12 +295,7 @@ const fetchData = () => {
     });
 };
 
-// Run fetch and animation in sequence
-const resolveFetch = () => {
-  return new Promise((resolve, reject) => {
-    fetchData();
-    resolve("Fetch done!");
-  });
-};
-
-resolveFetch().then(animationTimeline());
+// Run fetch FIRST, then animation
+fetchData().then(() => {
+  animationTimeline();
+});
