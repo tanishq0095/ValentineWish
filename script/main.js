@@ -292,10 +292,15 @@ const fetchData = () => {
           }
         }
       });
+    })
+    .catch((error) => {
+      console.error("Error loading customize.json:", error);
     });
 };
 
-// Run fetch FIRST, then animation
-fetchData().then(() => {
-  animationTimeline();
+// Wait until DOM loads completely
+window.addEventListener("load", () => {
+  fetchData().then(() => {
+    animationTimeline();
+  });
 });
