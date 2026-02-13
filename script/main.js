@@ -275,31 +275,20 @@ hbd.innerHTML = `<span>${hbd.innerHTML
 };
 
 // Import the data to customize and insert them into page
-// Import the data to customize and insert them into page
 const fetchData = () => {
   return fetch("customize.json")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((data) => {
-      Object.keys(data).forEach((customData) => {
-        if (data[customData] !== "") {
-          if (customData === "imagePath") {
-            document
-              .getElementById(customData)
-              .setAttribute("src", data[customData]);
-          } else {
-            document.getElementById(customData).innerText = data[customData];
-          }
-        }
-      });
+      // ... your existing logic
     })
     .catch((error) => {
-      console.error("Error loading customize.json:", error);
+      console.error("Critical: customize.json failed to load.", error);
+      // Fallback: start animation anyway even if JSON fails
+      animationTimeline(); 
     });
 };
-
-// Wait until DOM loads completely
-window.addEventListener("load", () => {
-  fetchData().then(() => {
-    animationTimeline();
-  });
-});
